@@ -892,10 +892,3 @@ newmail.Attachments.Add(filename)
 
 # send
 newmail.Send()
-
-
-# In[ ]:
-
-
-
-
