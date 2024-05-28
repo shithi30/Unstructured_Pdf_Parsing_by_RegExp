@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
-
 # import
 import glob
 from pathlib import Path
@@ -19,10 +16,6 @@ from pretty_html_table import build_table
 import random
 from datetime import datetime
 import time
-
-
-# In[2]:
-
 
 # fetch LCs
 def fetch_read_lc(rec_date_from, rec_date_to): 
@@ -55,10 +48,6 @@ def fetch_read_lc(rec_date_from, rec_date_to):
             if re.match(".+ACK.pdf", filename, re.IGNORECASE): attachment.SaveAsFile(output_dir / "MTB LCs" / filename)
             if re.match(".+SWIFT.+.pdf", filename, re.IGNORECASE): attachment.SaveAsFile(output_dir / "BBL LCs" / filename)
             if re.match(".+700.pdf", filename, re.IGNORECASE): attachment.SaveAsFile(output_dir / "PRB LCs" / filename)
-
-
-# In[3]:
-
 
 # HSBC
 def parse_hsbc(f):
@@ -218,10 +207,6 @@ def parse_hsbc(f):
     # return 
     return df_hsbc
 
-
-# In[4]:
-
-
 # BBL
 def parse_bbl(f):
 
@@ -380,10 +365,6 @@ def parse_bbl(f):
 
     # return 
     return df_bbl
-
-
-# In[5]:
-
 
 # SCB
 def breach_scb(f, path):
@@ -564,10 +545,6 @@ def parse_scb(f):
     # return 
     return df_scb
 
-
-# In[6]:
-
-
 # PRB
 def parse_prb(f):
 
@@ -727,16 +704,8 @@ def parse_prb(f):
     # return 
     return df_prb
 
-
-# In[7]:
-
-
 # LCs
 fetch_read_lc('2023-09-01', '2032-12-31')
-
-
-# In[8]:
-
 
 # accumulate HSBC
 inc_docs = ""
@@ -759,10 +728,6 @@ email_hsbc_df['LCs Parsed'] = [df_hsbc.shape[0]]
 email_hsbc_df['LCs Incomplete'] = [inc_docs.count(",")]
 email_hsbc_df['Incomplete LC Docs'] = [",".join(inc_docs.split(",", 3)[:3]) + ", ..."]
 email_hsbc_df['Sec to Parse'] = [round(time.time() - start_time)]
-
-
-# In[9]:
-
 
 # breach SCB
 files = glob.glob(r"C:/Users/Shithi.Maitra/Unilever Codes/Ad Hoc/PR Prioritization Procurement/Emailed LCs/SCB LCs/*.pdf")
@@ -790,10 +755,6 @@ email_scb_df['LCs Incomplete'] = [inc_docs.count(",")]
 email_scb_df['Incomplete LC Docs'] = [",".join(inc_docs.split(",", 3)[:3]) + ", ..."]
 email_scb_df['Sec to Parse'] = [round(time.time() - start_time)]
 
-
-# In[10]:
-
-
 # accumulate BBL
 inc_docs = ""
 df_bbl = pd.DataFrame()
@@ -815,10 +776,6 @@ email_bbl_df['LCs Parsed'] = [df_bbl.shape[0]]
 email_bbl_df['LCs Incomplete'] = [inc_docs.count(",")]
 email_bbl_df['Incomplete LC Docs'] = [",".join(inc_docs.split(",", 3)[:3]) + ", ..."]
 email_bbl_df['Sec to Parse'] = [round(time.time() - start_time)]
-
-
-# In[11]:
-
 
 # accumulate PRB
 inc_docs = ""
@@ -842,10 +799,6 @@ email_prb_df['LCs Incomplete'] = [inc_docs.count(",")]
 email_prb_df['Incomplete LC Docs'] = [",".join(inc_docs.split(",", 3)[:3]) + ", ..."]
 email_prb_df['Sec to Parse'] = [round(time.time() - start_time)]
 
-
-# In[12]:
-
-
 # OP
 
 # file
@@ -857,10 +810,6 @@ df.to_excel("LCs_parsed_test.xlsx", index=False)
 qry = '''select * from email_hsbc_df union all select * from email_scb_df union all select * from email_bbl_df /*union all select * from email_prb_df*/'''
 email_df = duckdb.query(qry).df()
 display(email_df)
-
-
-# In[13]:
-
 
 # email
 ol = win32com.client.Dispatch("outlook.application")
