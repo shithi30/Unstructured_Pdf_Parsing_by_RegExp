@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[3]:
-
-
 # HSBC
 
 # import
@@ -223,22 +220,4 @@ display(df_hsbc)
 
 # save
 df_hsbc.to_excel("C:/Users/Shithi.Maitra/Downloads/LC_data_logistics.xlsx", index=False)
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
 
